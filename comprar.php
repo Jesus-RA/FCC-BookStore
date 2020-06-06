@@ -28,7 +28,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-    <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+    <a class="navbar-brand" href="index.php">Start Bootstrap</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -36,16 +36,16 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link" href="index.php">Inicio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="comprar.html">Comprar</a>
+            <a class="nav-link" href="comprar.php">Comprar</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="login.html">Iniciar Sesión</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="register.html">Registrarse</a>
+            <a class="nav-link" href="register.php">Registrarse</a>
         </li>
         </ul>
     </div>
@@ -70,13 +70,13 @@
         include('model/conexion.php');
 
         $bd = conectarse();
-        $query = "SELECT * FROM carrera";
+        $query = "SELECT * FROM area";
         $result = $bd->query($query);
         $i = 0;
         while($row = $result->fetch_assoc()){
-            $carreras[$i] = [
-                "idCarrera" => $row['idCarrera'],
-                "carrera" => $row['carrera']
+            $areas[$i] = [
+                "idArea" => $row['idArea'],
+                "area" => $row['area']
             ];
             $i++;
         }
@@ -84,34 +84,54 @@
     ?>
     <!-- Post Content -->
     <article>
-    <div class="container">
-    <div class="row">
+        <div class="container">
+            <div class="row">
 
-        <div class="col-lg-5" style="border: 1px solid black;">
-            <table>
-                <thead>
-                    <th>Titulo</th>
-                </thead>
-                <tbody>
-                    <td>Los monos</td>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-lg-5" style="border: 1px solid black; margin-left:5px;">
-            Holi
-        </div>
+                <div class="col-lg-5 col-md-10 mx-auto form-group" id="areaLibro">
+                    <form action="#">
+                        <select name="area" id="area" class="form-control">
+                            <?php foreach($areas as $area): ?>
+                            <option value="<?php echo $area['idArea'] ?>"><?php echo $area['area'] ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </form>
+                </div>
 
-        <div class="col-lg-8 col-md-10 mx-auto form-group">
-        <form action="#">
-            <select name="area" id="area" class="form-control">
-                <?php foreach($carreras as $carrera): ?>
-                <option value="<?php echo $carrera['idCarrera'] ?>"><?php echo $carrera['carrera'] ?></option>
-                <?php endforeach ?>
-            </select>
-        </form>
+                <div class="card-deck">
+                    <div class="card">
+                        <img src="img/books.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="img/books.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="img/books.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
-    </div>
     </article>
 
     <hr>

@@ -28,7 +28,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+      <a class="navbar-brand" href="index.php">Start Bootstrap</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -36,16 +36,16 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link" href="index.php">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="comprar.html">Comprar</a>
+            <a class="nav-link" href="comprar.php">Comprar</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="login.html">Iniciar Sesión</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="register.html">Registrarse</a>
+            <a class="nav-link" href="register.php">Registrarse</a>
           </li>
         </ul>
       </div>
@@ -73,27 +73,28 @@
         <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
         <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
         <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-        <form name="sentMessage" id="contactForm" novalidate>
+        <form name="loginForm" id="loginForm" method="POST" novalidate>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Email</label>
-              <input type="email" class="form-control" placeholder="Email" id="email" required data-validation-required-message="Ingresa tu email.">
-              <p class="help-block text-danger"></p>
+              <input type="email" class="form-control" placeholder="Email" name="email" id="email" required data-validation-required-message="Ingresa tu email.">
+              <p class="help-block text-danger" id="emailWrong"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Contraseña</label>
-              <input type="password" class="form-control" placeholder="Contraseña" id="pass" required data-validation-required-message="Ingresa tu contraseña.">
-              <p class="help-block text-danger"></p>
+              <input type="password" class="form-control" placeholder="Contraseña" name="password" id="password" required data-validation-required-message="Ingresa tu contraseña.">
+              <p class="help-block text-danger" id="passWrong"></p>
             </div>
           </div>
           <br>
           <div id="success"></div>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton">Iniciar Sesión</button>
+            <button type="button" onclick="loginF()" class="btn btn-primary" id="login">Iniciar Sesión</button>
           </div>
         </form>
+        <div id="datos"></div>
       </div>
     </div>
   </div>
@@ -111,13 +112,14 @@
     </div>
   </footer>
 
+  <script src="js/BookStore.js"></script>
+
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Contact Form JavaScript -->
   <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
