@@ -24,6 +24,7 @@
 
   <!-- Custom styles for this template -->
   <link href="css/clean-blog.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
 </head>
 
@@ -76,20 +77,48 @@
         <div class="col-lg-12 col-md-10 mx-auto">
           <div class="site-heading">
             <h2>Haz que la vida de tus libros aporten conocimiento a más vidas</h2>
-            <span class="subheading">!Compra y vende libros ahora¡</span>            
+            <span class="subheading"><?php echo $_SESSION['usuario']==NULL ? '!Compra y vende libros ahora¡' : '' ?></span>            
           </div>
         </div>
       </div>
     </div>
   </header>
 
+    <?php 
+        include('model/conexion.php');
+        if($_SESSION['usuario']){
+            $libros = getLibros($_SESSION['idUsuario']);
+        }
+    ?>
   <!-- Main Content -->
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-
-
-      </div>
+            <?php if($_SESSION['usuario']!=NULL): ?>
+                <?php foreach($libros as $libro):?>
+                <div class="card-deck col-lg-4" id="books">
+                    <div class="card" idLibro="<?php echo $libro['idLibro'] ?>">
+                        <img src="img/<?php echo $libro['foto'] ?>" class="card-img-top" alt="<?php echo $libro['foto'] ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $libro['titulo'] ?></h5>
+                            <p class="card-text"><b>Area:</b> <?php echo $libro['Area'] ?></p>
+                            <p class="card-text"><b>Estado:</b> <?php echo $libro['Estado'] ?></p>
+                            <p class="card-text"><b>Descripción:</b> <?php echo $libro['descripcion'] ?></p>
+                            <p class="card-text"><b>Precio:</b> $ <?php echo $libro['precio'] ?> MXN</p>
+                            <p class="card-text"><b>Estado:</b> <?php echo $libro['vendido']==1 ? 'Vendido' : 'En venta' ?></p>
+                        </div>
+                        <div class="card-footer">
+                            <form action="realizarCompra.php" method="POST">
+                              <input type="text" class="libroElegido" name="libroAComprar">
+                              <button type="submit" class="form-control btn-dark editar">Editar</button>
+                            </form>                            
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach ?>
+                <?php if (sizeof($libros)==0):?>
+                    <div class="alert alert-warning text-center mx-auto">Aún no has agregado libros a tu lista, agrega uno ahora!</div>
+                <?php endif ?>
+            <?php endif ?>
     </div>
   </div>
 
@@ -106,6 +135,7 @@
     </div>
   </footer>
 
+  <script src="js/BookStore.js"></script>
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -20,7 +20,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/clean-blog.min.css" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -70,66 +70,27 @@
         include('model/conexion.php');
 
         $bd = conectarse();
-        $query = "SELECT * FROM area";
-        $result = $bd->query($query);
-        $i = 0;
-        while($row = $result->fetch_assoc()){
-            $areas[$i] = [
-                "idArea" => $row['idArea'],
-                "area" => $row['area']
-            ];
-            $i++;
-        }
+        $areas = getAreas();
+        $libros = getAllBooks();
 
     ?>
     <!-- Post Content -->
     <article>
         <div class="container">
             <div class="row">
-
-                <div class="col-lg-5 col-md-10 mx-auto form-group" id="areaLibro">
-                    <form action="#">
-                        <select name="area" id="area" class="form-control">
-                            <?php foreach($areas as $area): ?>
-                            <option value="<?php echo $area['idArea'] ?>"><?php echo $area['area'] ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </form>
+                <div class="col-lg-12 col-md-10 mx-auto form-group" id="areaLibro">
+                        <form action="#">
+                            <select class="form-control mx-auto col-lg-4" name="area" id="area" class="form-control">
+                                <option value="">Area...</option>
+                                <?php foreach($areas as $area): ?>
+                                <option value="<?php echo $area['idArea'] ?>"><?php echo $area['area'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </form>
                 </div>
-
-                <div class="card-deck">
-                    <div class="card">
-                        <img src="img/books.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="img/books.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="img/books.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Last updated 3 mins ago</small>
-                        </div>
-                    </div>
-                </div>
-
+            </div>
+            <div class="row" id="libros">
+                
             </div>
         </div>
     </article>
@@ -147,6 +108,7 @@
     </div>
     </footer>
 
+    <script src="js/BookStore.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

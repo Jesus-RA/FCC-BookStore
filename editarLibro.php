@@ -60,7 +60,7 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/books.jpg')">
+  <header class="masthead" style="background-image: url('img/register.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">

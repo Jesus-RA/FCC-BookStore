@@ -1,8 +1,3 @@
-<?php
-    include ('keys.php');
-    session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,18 +37,17 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-            <a class="nav-link" href="index.php">Inicio</a>
+                <a class="nav-link" href="index.php">Inicio</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="vender.php">Vender Libro</a>
+                <a class="nav-link" href="comprar.php">Comprar</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><?php echo "Bienvenido &nbsp;&nbsp;&nbsp;".$_SESSION['usuario'] ?></a>
+                <a class="nav-link" href="login.html">Iniciar Sesión</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+                <a class="nav-link" href="register.php">Registrarse</a>
             </li>
-
         </ul>
       </div>
     </div>
@@ -66,8 +60,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h2>Vender Libro</h2>
-            <div class="subheading">Tu libro puede cambiar una vida</div>            
+            <h2>Estás a punto de hacer la mejor compra del día!</h2>
+            <div class="subheading">Éste libro puede cambiar tu vida</div>            
           </div>
         </div>
       </div>
@@ -76,82 +70,85 @@
 
     <?php
         include('model/conexion.php');
-        $areas = getAreas();
-        $estados = getEstados();
+
+        $idLibro = $_REQUEST['libroAComprar'];
+        $carreras = getCarreras();
+        $libros = getBookById($idLibro);
     ?>
 
   <!-- Main Content -->
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-        <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-        <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
+        <!-- Div para mostar tarjeta del libro -->
+        <div class="col-lg-5 col-md-4">
+            <div class="container">
+                <div class="row">
+                    <?php foreach($libros as $libro):?>
+                    <div class="card-deck" id="books">
+                        <div class="card">
+                            <img src="img/<?php echo $libro['foto'] ?>" class="card-img-top" alt="<?php echo $libro['foto'] ?>">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $libro['titulo'] ?></h5>
+                                <p class="card-text"><b>Area:</b> <?php echo $libro['Area'] ?></p>
+                                <p class="card-text"><b>Estado:</b> <?php echo $libro['Estado'] ?></p>
+                                <p class="card-text"><b>Descripción:</b> <?php echo $libro['descripcion'] ?></p>
+                                <p class="card-text"><b>Precio:</b> $ <?php echo $libro['precio'] ?> MXN</p>
+                                <p class="card-text"><b>Estado:</b> <?php echo $libro['vendido']==1 ? 'Vendido' : 'En venta' ?></p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="form-control btn-dark" onclick="">Editar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+        <!-- Div formulario para compra -->
+      <div class="col-lg-7 col-md-8 my-auto">        
         <form action="addBook.php" id="sellForm" method="POST" enctype="multipart/form-data" novalidate>
-            <!-- Titulo -->
+            <!-- Matricula -->
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
-                    <label>Titulo</label>
-                    <input type="text" class="form-control" placeholder="Titulo" name="titulo" id="titulo" required data-validation-required-message="Ingresa el titulo de tu libro.">
+                    <label>Matricula</label>
+                    <input type="text" class="form-control" placeholder="Matricula" name="matricula" id="matricula" required data-validation-required-message="Ingresa tu matricula.">
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
-            <!-- Area -->
+            <!-- Carrera -->
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
-                    <label>Area</label>
-                    <select class="form-control col-lg-4" name="area" id="area" required>
-                        <option value="">Area...</option>
-                        <?php foreach($areas as $area): ?>
-                        <option value="<?php echo $area['idArea'] ?>"><?php echo $area['area'] ?></option>
+                    <label>Carrera</label>
+                    <select class="form-control col-lg-8" name="carrera" id="carrera" required>
+                        <option value="">Carrera...</option>
+                        <?php foreach($carreras as $carrera): ?>
+                        <option value="<?php echo $carrera['idCarrera'] ?>"><?php echo $carrera['carrera'] ?></option>
                         <?php endforeach ?>
                     </select>
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
-            <!-- Descripción -->
-            <div class="control-group">
-                <div class="form-group floating-label-form-group controls">
-                <label>Descripción</label>
-                <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="3" placeholder="Descripción" required data-validation-required-message="Escribe una descripción sobre tu libro."></textarea>
-                <p class="help-block text-danger"></p>
-                </div>
-            </div>
-
             <input type="hidden" name="google-response-token" id="google-response-token">
-            <!-- Precio -->
+            <!-- Telefono -->
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
-                    <label>Precio</label>
-                    <input type="number" class="form-control col-lg-4" placeholder="Precio del libro" name="precio" id="precio" min="0" required data-validation-required-message="Ingresa el precio del libro.">
+                    <label>Telefono</label>
+                    <input type="text" class="form-control col-lg-4" placeholder="Número de telefono" name="telefono" id="telefono" required data-validation-required-message="Ingresa tu número de telefono.">
                     <p class="help-block text-danger"></p>
                 </div>
             </div>
-            <!-- Foto -->
+            <!-- Email -->
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
-                <label>Foto del libro</label>
-                <input type="FILE" class="form-control" placeholder="Foto del libro" name="foto" id="foto" required>
-                <p class="help-block text-danger"></p>
-                </div>
-            </div>
-            <!-- Estado -->
-            <div class="control-group">
-                <div class="form-group floating-label-form-group controls">
-                <label>Estado</label>
-                <select class="form-control col-lg-4" name="estado" id="estado" required>
-                    <option value="">Estado...</option>
-                    <?php foreach($estados as $estado): ?>
-                    <option value="<?php echo $estado['idEstado']; ?>"><?php echo $estado['estado']; ?></option>
-                    <?php endforeach ?>
-                </select>
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Email" name="email" id="email" required data-validation-required-message="Ingresa tu email.">
                 <p class="help-block text-danger"></p>
                 </div>
             </div>
           <br>
           <div id="success"></div>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary ml-auto" id="agregarB" onclick="addBook()">Agregar Libro</button>
+            <button type="submit" class="btn btn-primary ml-auto" id="comprarLibro" onclick="addBook()">Comprar Libro</button>
           </div>
         </form>
       </div>

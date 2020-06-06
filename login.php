@@ -6,7 +6,7 @@
         $password = $_POST['password'];
         
         $bd = conectarse();
-        $query = "SELECT idUsuario, nombre FROM usuario WHERE email = '$email'";
+        $query = "SELECT idUsuario, nombre, password FROM usuario WHERE email = '$email'";
         $result = $bd->query($query);
         $row = $result->fetch_assoc();
         if(!$result){
@@ -14,23 +14,24 @@
         }
         
         if($result->num_rows > 0){
-            $query = "SELECT idUsuario, nombre FROM usuario WHERE password = '$password'";
-            $result = $bd->query($query);
-            $row = $result->fetch_assoc();
-            if(!$result){
-                die("Contraseña incorrecta");
-            }
-            if($result->num_rows > 0){
+            // $query = "SELECT idUsuario, nombre FROM usuario WHERE password = '$password'";
+            // $result = $bd->query($query);
+            // $row = $result->fetch_assoc();
+            // if(!$result){
+            //     die("Contraseña incorrecta");
+            // }
+            // if($result->num_rows > 0){
+            if($row['password']==$password){
                 session_start();
                 $_SESSION['usuario'] = $row['nombre'];
                 $_SESSION['idUsuario'] = $row['idUsuario'];
                 echo "1";
             }else{
-                echo "Contraseña incorrecta";
+                echo "3";
             }
 
         }else{
-            echo "Usuario incorrecto";
+            echo "2";
         }
     }
 ?>
