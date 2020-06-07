@@ -86,6 +86,34 @@
         return $libros;
     }
 
+    function getLibrosVendidos($usuario){
+        $bd = conectarse();
+        $query = "SELECT e.estado AS Estado, a.area AS Area, l.* FROM libro l, area a, estado e WHERE (l.propietario = $usuario AND l.vendido = 1) AND (a.idArea = l.area AND e.idEstado = l.estado);";
+        $result = $bd->query($query);
+        if(!$result){
+            die("Query Error Libros");
+        }
+        $i = 0;
+        while($row = $result->fetch_assoc()){
+            $libros[$i] = [
+                "idLibro" => $row['idLibro'],
+                "titulo" => $row['titulo'],
+                "area" => $row['area'],
+                "descripcion" => $row['descripcion'],
+                "precio" => $row['precio'],
+                "foto" => $row['foto'],
+                "estado" => $row['estado'],
+                "propietario" => $row['propietario'],
+                "vendido" => $row['vendido'],
+                "Estado" => $row['Estado'],
+                "Area" => $row['Area']
+
+            ];
+            $i++;
+        }
+        return $libros;
+    }
+
     function getAllBooks(){
         $bd = conectarse();
         $query = "SELECT e.estado AS Estado, a.area AS Area, l.* FROM libro l, area a, estado e WHERE l.vendido = 0 AND (a.idArea = l.area AND e.idEstado = l.estado);";
@@ -168,5 +196,25 @@
             $i++;
         }
         return $libros;
+    }
+
+    function getBookBuyer($libro){
+        $bd = conectarse();
+        $query = "SELECT * FROM compra WHERE libro = $libro";
+        $result = $bd->query($query);
+        if(!$result){
+            die("Query erro: Obteniendo el cliente");
+        }
+        $row = $result->fetch_assoc();
+        $buyer = [
+            "idCompra" => $row['idCompra'],
+            "libro" => $row['libro'],
+            "matricula" => $row['matricula'],
+            "carrera" => $row['carrera'],
+            "telefono" => $row['telefono'],
+            "email" => $row['email']
+        ];
+
+        return $buyer;
     }
 ?>

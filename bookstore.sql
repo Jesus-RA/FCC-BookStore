@@ -11,17 +11,6 @@ CREATE TABLE carrera(
     CONSTRAINT idCarrera PRIMARY KEY (idCarrera, carrera)
 );
 
-DROP TABLE IF EXISTS internauta;
-CREATE TABLE internauta(
-    idInternauta INT NOT NULL AUTO_INCREMENT,
-    matricula VARCHAR(24) NOT NULL,
-    carrera INT NOT NULL,
-    telefono VARCHAR(24) NOT NULL,
-    email VARCHAR(128) NOT NULL,
-    FOREIGN KEY (carrera) REFERENCES carrera (idCarrera) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT idInternauta PRIMARY KEY (idInternauta, matricula, carrera)
-);
-
 DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuario(
     idUsuario INT NOT NULL AUTO_INCREMENT,
@@ -66,10 +55,13 @@ DROP TABLE IF EXISTS compra;
 CREATE TABLE compra(
     idCompra INT NOT NULL AUTO_INCREMENT,
     libro INT NOT NULL,
-    comprador INT NOT NULL,
+    matricula VARCHAR(24) NOT NULL,
+    carrera INT NOT NULL,
+    telefono VARCHAR(24) NOT NULL,
+    email VARCHAR(128) NOT NULL,
     FOREIGN KEY (libro) REFERENCES libro (idLibro) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (comprador) REFERENCES internauta (idInternauta) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT idCompra PRIMARY KEY (idCompra, libro, comprador)
+    FOREIGN KEY (carrera) REFERENCES carrera (idCarrera) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT idCompra PRIMARY KEY (idCompra, libro, matricula)
 );
 
 -- Script para insertar datos en bookstore
@@ -88,3 +80,15 @@ INSERT INTO estado (estado) VALUES ('Maltratado');
 INSERT INTO carrera (carrera) VALUES ('Ingeniería en Ciencias de la Computación');
 INSERT INTO carrera (carrera) VALUES ('Licenciatura en Ciencias de la Computación');
 INSERT INTO carrera (carrera) VALUES ('Ingeniería en Tecnologías de la Información');
+
+-- Trigger para marcar un libro como vendido al realizar su venta
+DROP TRIGGER IF EXISTS realizarCompra;
+DELIMITER //
+CREATE TRIGGER realizarCompra
+BEFORE INSERT ON compra
+FOR EACH ROW
+BEGIN
+	UPDATE libro SET vendido = 1 WHERE idLibro = NEW.libro;
+END
+//
+DELIMITER ;

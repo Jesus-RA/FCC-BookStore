@@ -30,3 +30,8 @@
    #books{
       margin-bottom: 60px;
    }
+
+   #bookImage{
+      width: 200px;
+      height: 200px;
+   }

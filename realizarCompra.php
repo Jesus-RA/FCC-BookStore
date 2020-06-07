@@ -21,7 +21,7 @@
   <!-- Custom styles for this template -->
   <link href="css/clean-blog.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -77,7 +77,7 @@
     ?>
 
   <!-- Main Content -->
-  <div class="container">
+  <div class="container" id="ventanaCompra">
     <div class="row">
         <!-- Div para mostar tarjeta del libro -->
         <div class="col-lg-5 col-md-4">
@@ -93,10 +93,6 @@
                                 <p class="card-text"><b>Estado:</b> <?php echo $libro['Estado'] ?></p>
                                 <p class="card-text"><b>Descripción:</b> <?php echo $libro['descripcion'] ?></p>
                                 <p class="card-text"><b>Precio:</b> $ <?php echo $libro['precio'] ?> MXN</p>
-                                <p class="card-text"><b>Estado:</b> <?php echo $libro['vendido']==1 ? 'Vendido' : 'En venta' ?></p>
-                            </div>
-                            <div class="card-footer">
-                                <button class="form-control btn-dark" onclick="">Editar</button>
                             </div>
                         </div>
                     </div>
@@ -105,8 +101,10 @@
             </div>
         </div>
         <!-- Div formulario para compra -->
-      <div class="col-lg-7 col-md-8 my-auto">        
-        <form action="addBook.php" id="sellForm" method="POST" enctype="multipart/form-data" novalidate>
+      <div class="col-lg-7 col-md-8 my-auto" id="datosCompra">        
+        <form id="buyForm" method="POST" novalidate>
+            <!-- Libro -->
+            <input type="hidden" name="libro" value="<?php echo $idLibro; ?>">
             <!-- Matricula -->
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
@@ -148,13 +146,12 @@
           <br>
           <div id="success"></div>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary ml-auto" id="comprarLibro" onclick="addBook()">Comprar Libro</button>
+            <button type="button" class="btn btn-primary ml-auto" id="comprarLibro" onclick="comprar()">Comprar Libro</button>
           </div>
         </form>
       </div>
     </div>
   </div>
-
   <hr>
 
   <!-- Footer -->
@@ -168,9 +165,6 @@
     </div>
   </footer>
 
-  <script type="text/javascript">
-
-  </script>
   <!-- Llamamos a nuestro archivo javascript -->
   <script src="js/BookStore.js"></script>
 

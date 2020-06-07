@@ -58,6 +58,9 @@
                 <a class="nav-link" href="vender.php">Vender Libro</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="ventas.php">Ventas</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#"><?php echo "Bienvenido &nbsp;&nbsp;&nbsp;".$_SESSION['usuario'] ?></a>
             </li>
             <li class="nav-item">
@@ -76,6 +79,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-10 mx-auto">
           <div class="site-heading">
+            <h1>FCC-BookStore</h1>
             <h2>Haz que la vida de tus libros aporten conocimiento a más vidas</h2>
             <span class="subheading"><?php echo $_SESSION['usuario']==NULL ? '!Compra y vende libros ahora¡' : '' ?></span>            
           </div>
@@ -94,6 +98,7 @@
   <div class="container">
     <div class="row">
             <?php if($_SESSION['usuario']!=NULL): ?>
+              <div class="alert alert-dark col-lg-12 text-center ">Mis libros</div>
                 <?php foreach($libros as $libro):?>
                 <div class="card-deck col-lg-4" id="books">
                     <div class="card" idLibro="<?php echo $libro['idLibro'] ?>">
@@ -107,8 +112,8 @@
                             <p class="card-text"><b>Estado:</b> <?php echo $libro['vendido']==1 ? 'Vendido' : 'En venta' ?></p>
                         </div>
                         <div class="card-footer">
-                            <form action="realizarCompra.php" method="POST">
-                              <input type="text" class="libroElegido" name="libroAComprar">
+                            <form action="editBook.php" method="POST">
+                              <input type="hidden" class="libroElegido" name="libroAEditar">
                               <button type="submit" class="form-control btn-dark editar">Editar</button>
                             </form>                            
                         </div>
@@ -118,6 +123,23 @@
                 <?php if (sizeof($libros)==0):?>
                     <div class="alert alert-warning text-center mx-auto">Aún no has agregado libros a tu lista, agrega uno ahora!</div>
                 <?php endif ?>
+
+                <?php else:?>
+                  <div class="alert alert-white text-dark col-lg-12 text-justify"> 
+                    <p>FCC-BookStore es un Aplicación Web a tráves de la cual puedes vender y
+                     comprar libros usados en la Facultad de Ciencias de la Computación.
+                    </p>
+                  </div>
+                  <div class="alert alert-white text-dark col-lg-12 text-justify"> 
+                     <p>Compra libros sin necesidad de crear una cuenta, sólo deberás dejar tu matricula, carrera, telefono y correo eléctronico
+                       y el vendedor se comunicará contigo para realizar la venta en la facultad.
+                     </p>
+                  </div>
+                  <div class="alert alert-white text-dark col-lg-12 text-justify"> 
+                     <p>
+                       Vende tus libros creando una cuenta con tu nombre y tu email y agrega tus libros aquí.
+                     </p>
+                  </div>
             <?php endif ?>
     </div>
   </div>

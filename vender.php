@@ -48,6 +48,9 @@
             <a class="nav-link" href="vender.php">Vender Libro</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="ventas.php">Ventas</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#"><?php echo "Bienvenido &nbsp;&nbsp;&nbsp;".$_SESSION['usuario'] ?></a>
             </li>
             <li class="nav-item">
