@@ -79,7 +79,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-10 mx-auto">
           <div class="site-heading">
-            <h2>Haz que la vida de tus libros aporten conocimiento a más vidas</h2>
+            <h2>Gracias por aportar conocimiento a más personas compartiendo la vida de tus libros</h2>
             <span class="subheading"><?php echo $_SESSION['usuario']==NULL ? '!Compra y vende libros ahora¡' : '' ?></span>            
           </div>
         </div>
@@ -120,7 +120,7 @@
                 </div>
                 <?php endforeach ?>
                 <?php if (sizeof($libros)==0):?>
-                    <div class="alert alert-warning text-center mx-auto">Aún no has agregado libros a tu lista, agrega uno ahora!</div>
+                    <div class="alert alert-warning text-center mx-auto">Aún no has vendido libros.</div>
                 <?php endif ?>
             <?php endif ?>
     </div>
