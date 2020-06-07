@@ -82,6 +82,8 @@ INSERT INTO carrera (carrera) VALUES ('Licenciatura en Ciencias de la Computaci�
 INSERT INTO carrera (carrera) VALUES ('Ingeniería en Tecnologías de la Información');
 
 -- Trigger para marcar un libro como vendido al realizar su venta
+USE bookstore;
+
 DROP TRIGGER IF EXISTS realizarCompra;
 DELIMITER //
 CREATE TRIGGER realizarCompra

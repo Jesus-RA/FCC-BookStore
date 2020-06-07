@@ -146,7 +146,7 @@
           <br>
           <div id="success"></div>
           <div class="form-group">
-            <button type="button" class="btn btn-primary ml-auto" id="comprarLibro" onclick="comprar()">Comprar Libro</button>
+            <button type="button" class="btn btn-dark ml-auto" id="comprarLibro" onclick="comprar()">Comprar Libro</button>
           </div>
         </form>
       </div>
